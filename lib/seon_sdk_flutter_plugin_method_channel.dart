@@ -22,9 +22,10 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
   }
 
   @override
-  Future<void> enableGeolocation() async {
+  Future<void> setGeolocationEnabled(bool enabled) async {
     try {
-      await _channel.invokeMethod('enableGeolocation');
+      await _channel
+          .invokeMethod('setGeolocationEnabled', {'enabled': enabled});
     } on PlatformException catch (e) {
       print("Failed to enable geolocation: ${e.message}");
     } catch (e) {

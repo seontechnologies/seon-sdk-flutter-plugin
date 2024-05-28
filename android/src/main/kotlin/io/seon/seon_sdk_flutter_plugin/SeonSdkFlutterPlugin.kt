@@ -8,6 +8,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 import android.content.Context;
+import android.util.Log
 import java.util.UUID;
 import io.seon.androidsdk.BuildConfig;
 import io.seon.androidsdk.dto.SeonGeolocationConfig;
@@ -22,8 +23,9 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
   ///
   /// This local reference serves to register the plugin with the Flutter Engine and unregister it
   /// when the Flutter Engine is detached from the Activity
-  private lateinit var channel : MethodChannel
-   private lateinit var context: Context
+    private lateinit var channel : MethodChannel
+    private lateinit var context: Context
+    private var geolocationConfig: SeonGeolocationConfig = SeonGeolocationConfigBuilder().build()
 
   override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "seon_sdk_flutter_plugin")
@@ -45,8 +47,11 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
             }
             getFingerprint(sessionId, result)
         }
-        "enableGeolocation" -> {
-            enableGeolocation()
+        "setGeolocationEnabled" -> {
+            val isGeoEnabled = call.argument<Boolean?>("enabled")
+            if (isGeoEnabled!=null) {
+                setGeolocationEnabled(isGeoEnabled)
+            }
             result.success(null)
         }
         else -> result.notImplemented()
@@ -57,6 +62,7 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
     val seonFingerprint = SeonBuilder()
         .withContext(context)
         .withSessionId(sessionId)
+        .withGeoLocationConfig(geolocationConfig)
         .build()
 
     seonFingerprint.setLoggingEnabled(true)
@@ -75,21 +81,12 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private fun enableGeolocation() {
-      val seonGeolocationConfig = SeonGeolocationConfigBuilder()
+  private fun setGeolocationEnabled(enabled:Boolean) {
+      geolocationConfig = SeonGeolocationConfigBuilder()
           .withPrefetchEnabled(true)
+          .withGeolocationEnabled(enabled)
           .withGeolocationServiceTimeoutMs(3000)
           .withMaxGeoLocationCacheAgeSec(600)
           .build()
-
-      val seon = SeonBuilder()
-          .withContext(context)
-          .withSessionId(UUID.randomUUID().toString())
-          .withGeolocationEnabled()
-          .withGeoLocationConfig(seonGeolocationConfig)
-          .build()
-
-      seon.setGeolocationEnabled(true)
-      seon.setGeoLocationConfig(seonGeolocationConfig)
   }
 }

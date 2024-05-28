@@ -22,6 +22,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    try {
+      _seonSdkFlutterPlugin.setGeolocationEnabled(true);
+    } catch (e) {
+      print('$e');
+    }
   }
 
   // Method to get fingerprint
