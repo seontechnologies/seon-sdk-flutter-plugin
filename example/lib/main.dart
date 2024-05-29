@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     try {
       _seonSdkFlutterPlugin.setGeolocationEnabled(true);
+      _seonSdkFlutterPlugin.setGeolocationTimeout(500);
     } catch (e) {
       print('$e');
     }

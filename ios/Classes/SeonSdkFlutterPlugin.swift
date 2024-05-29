@@ -5,6 +5,7 @@ import SeonSDK
 public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
   
     var isGeoEnabled : Bool = false
+    var geoLocationTimeout : Int = 500
     
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "seon_sdk_flutter_plugin", binaryMessenger: registrar.messenger())
@@ -24,10 +25,18 @@ public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
             case "setGeolocationEnabled":
                 guard let args = call.arguments as? [String? : Any],
                     let isGeoEnabled = args["enabled"] as? Bool else{
-                    result(FlutterError(code: "ERROR_PARSING_GEO_ARG", message: "Error while parsing setGeolocationEnabled argument", details: nil))
+                    result(FlutterError(code: "ERROR_PARSING_GEO_ENABLED", message: "Error while parsing setGeolocationEnabled argument", details: nil))
                     return
                 }
                 setGeolocationEnabled(enabled: isGeoEnabled)
+                result(nil)
+            case "setGeolocationTimeout":
+                guard let args = call.arguments as? [String? : Any],
+                let timeoutMs = args["timeoutInMillisec"] as? Int else{
+                    result(FlutterError(code: "ERROR_PARSING_GEO_TIMEOUT", message: "Error while parsing setGeolocationTimeout argument", details: nil))
+                    return
+                }
+                setGeolocationTimeout(timeoutInMs: timeoutMs)
                 result(nil)
             default:
               result(FlutterMethodNotImplemented)
@@ -37,7 +46,7 @@ public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
     private func getFingerprint(sessionId: String, result: @escaping FlutterResult) {
         let seonfp = SEONFingerprint()
         seonfp.setGeolocationEnabled(geolocationEnabled: isGeoEnabled)
-        seonfp.setGeolocationTimeout(timeoutMs: 3000)
+        seonfp.setGeolocationTimeout(timeoutMs: geoLocationTimeout)
         seonfp.sessionId = sessionId
         
         seonfp.getFingerprintBase64 { seonFingerprint, error in
@@ -47,7 +56,11 @@ public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
             result(seonFingerprint)
           }
         }
-      }
+    }
+    
+    private func setGeolocationTimeout(timeoutInMs:Int){
+        geoLocationTimeout = timeoutInMs
+    }
 
     private func setGeolocationEnabled(enabled: Bool) {
         isGeoEnabled = true;

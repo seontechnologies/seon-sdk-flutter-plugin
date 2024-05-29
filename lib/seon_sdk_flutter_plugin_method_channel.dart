@@ -33,7 +33,13 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
     }
   }
 
-  // Future<void> setGeolocationTimeout(int timeout) async {
-
-  // }
+  @override
+  void setGeolocationTimeout(int timeoutInMillisec) {
+    try {
+      _channel.invokeMethod(
+          'setGeolocationTimeout', {'timeoutInMillisec': timeoutInMillisec});
+    } catch (e) {
+      print("Error while setting Geolocation Timeout: $e");
+    }
+  }
 }

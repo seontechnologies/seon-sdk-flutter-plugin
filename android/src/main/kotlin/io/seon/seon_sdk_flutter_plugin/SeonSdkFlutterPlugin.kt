@@ -31,6 +31,12 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
     channel = MethodChannel(flutterPluginBinding.binaryMessenger, "seon_sdk_flutter_plugin")
     channel.setMethodCallHandler(this)
     context = flutterPluginBinding.applicationContext
+    // Android specific default GeolocationConfig parameters can be modified here
+    geolocationConfig = SeonGeolocationConfigBuilder()
+      .withPrefetchEnabled(true)
+      .withGeolocationServiceTimeoutMs(3000)
+      .withMaxGeoLocationCacheAgeSec(600)
+      .build()
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -54,6 +60,14 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
             }
             result.success(null)
         }
+        "setGeolocationTimeout" ->{
+            val timeoutInMs = call.argument<Int>("timeoutInMillisec")
+            if (timeoutInMs != null){
+                Log.d("SEON","geo timeout: $timeoutInMs")
+                setGeolocationTimeout(timeoutInMs)
+            }
+            result.success(null);
+          }
         else -> result.notImplemented()
     }
   }
@@ -82,11 +96,10 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
   }
 
   private fun setGeolocationEnabled(enabled:Boolean) {
-      geolocationConfig = SeonGeolocationConfigBuilder()
-          .withPrefetchEnabled(true)
-          .withGeolocationEnabled(enabled)
-          .withGeolocationServiceTimeoutMs(3000)
-          .withMaxGeoLocationCacheAgeSec(600)
-          .build()
+      geolocationConfig.isGeolocationEnabled = enabled
+  }
+
+  private fun setGeolocationTimeout(timeoutInMilliseconds:Int){
+      geolocationConfig.geolocationServiceTimeoutMs = timeoutInMilliseconds
   }
 }

@@ -29,4 +29,8 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   Future<void> setGeolocationEnabled(bool enabled) async {
     _instance.setGeolocationEnabled(enabled);
   }
+
+  void setGeolocationTimeout(int timeoutInMillisec) {
+    _instance.setGeolocationTimeout(timeoutInMillisec);
+  }
 }

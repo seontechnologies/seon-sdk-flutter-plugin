@@ -8,4 +8,9 @@ class SeonSdkFlutterPlugin {
   Future<void> setGeolocationEnabled(bool enabled) async {
     return SeonSdkFlutterPluginPlatform.instance.setGeolocationEnabled(enabled);
   }
+
+  void setGeolocationTimeout(int timeoutInMillisec) {
+    return SeonSdkFlutterPluginPlatform.instance
+        .setGeolocationTimeout(timeoutInMillisec);
+  }
 }
