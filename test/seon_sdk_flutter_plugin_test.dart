@@ -7,23 +7,55 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 class MockSeonSdkFlutterPluginPlatform
     with MockPlatformInterfaceMixin
     implements SeonSdkFlutterPluginPlatform {
+  String expectedFingerprint = 'Test_Fingerprint';
 
   @override
-  Future<String?> getPlatformVersion() => Future.value('42');
+  Future<String?> getFingerprint(String? sessionId) {
+    return Future.value(expectedFingerprint);
+  }
+
+  @override
+  void setGeolocationEnabled(bool enabled) {}
+
+  @override
+  void setGeolocationTimeout(int timeoutInMillisec) {}
 }
 
+String expectedFingerprint = 'Test_Fingerprint';
 void main() {
-  final SeonSdkFlutterPluginPlatform initialPlatform = SeonSdkFlutterPluginPlatform.instance;
+  final SeonSdkFlutterPluginPlatform initialPlatform =
+      SeonSdkFlutterPluginPlatform.instance;
 
-  test('$MethodChannelSeonSdkFlutterPlugin is the default instance', () {
-    expect(initialPlatform, isInstanceOf<MethodChannelSeonSdkFlutterPlugin>());
+  test('$SeonSdkWrapper is the default instance', () {
+    expect(initialPlatform, isInstanceOf<SeonSdkWrapper>());
   });
 
-  test('getPlatformVersion', () async {
+  test('getFingerprint', () async {
     SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
-    MockSeonSdkFlutterPluginPlatform fakePlatform = MockSeonSdkFlutterPluginPlatform();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
     SeonSdkFlutterPluginPlatform.instance = fakePlatform;
 
-    expect(await seonSdkFlutterPlugin.getPlatformVersion(), '42');
+    expect(await seonSdkFlutterPlugin.getFingerprint('test-session-id'),
+        expectedFingerprint);
+  });
+  test('setGeolocationEnabled', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    // Call the method and ensure no exceptions
+    seonSdkFlutterPlugin.setGeolocationEnabled(true);
+  });
+
+  test('setGeolocationTimeout', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    // Call the method and ensure no exceptions
+    seonSdkFlutterPlugin.setGeolocationTimeout(400);
   });
 }
