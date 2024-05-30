@@ -3,7 +3,7 @@
 # Run `pod lib lint seon_sdk_flutter_plugin.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'seon_sdk_flutter_pluginx'
+  s.name             = 'seon_sdk_flutter_plugin'
   s.version          = '1.0.0'
   s.summary          = 'SEON Flutter Plugin'
   s.description      = <<-DESC
