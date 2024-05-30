@@ -5,7 +5,7 @@ class SeonSdkFlutterPlugin {
     return SeonSdkFlutterPluginPlatform.instance.getFingerprint(sessionId);
   }
 
-  void setGeolocationEnabled(bool enabled) async {
+  void setGeolocationEnabled(bool enabled) {
     return SeonSdkFlutterPluginPlatform.instance.setGeolocationEnabled(enabled);
   }
 
