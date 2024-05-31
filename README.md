@@ -28,7 +28,9 @@ To learn more about device fingerprinting please visit our [knowledge base](http
 > __*device_location:__ Please see the Geolocation Integration section for more info
 ### Using the plugin
 
-Retrieve the encrypted fingerprint
+The SDK returns an encrypted, base64 encoded string. In order to receive the device details JSON a Fraud API request has to be made, and the result will be in the response.
+The base64 encoded string has to be added in the session property in the Fraud API request. It isn’t possible to access or modify the payload on the clients.
+
 ```dart
 final _seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
 
@@ -40,7 +42,9 @@ try {
     print("Error getting fingerprint: $e");
 }
 ```
-For details about how to send the fingerprint to our API to receive the device details JSON visit our [Fraud API documentation](https://docs.seon.io/api-reference/fraud-api#ios-sdk).
+
+
+For more details about how to send the fingerprint to our API to receive the device details JSON visit our [Fraud API documentation](https://docs.seon.io/api-reference/fraud-api#ios-sdk).
 ### Geolocation Integration (Opt-in)
 
 To enable SEON’s geolocation feature on your account please reach out the customer success team to enable the functionality on your Admin page and your Scoring Engine!
