@@ -47,7 +47,7 @@ To enable SEON’s geolocation feature on your account please reach out the cust
 
 Note: Currently even if the integration has been done correctly there won't be a device_location field in the Fraud API response until the feature flag has been set by our customer success team.
 
-Enable or disable geolocation:
+**Enable or disable geolocation:**
 
 ```dart
 // Prompt the user for the appropriate location permission(s)

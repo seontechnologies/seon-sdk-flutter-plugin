@@ -6,7 +6,6 @@
 // For more information about Flutter integration tests, please see
 // https://docs.flutter.dev/cookbook/testing/integration/introduction
 
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -15,11 +14,12 @@ import 'package:seon_sdk_flutter_plugin/seon_sdk_flutter_plugin.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('getPlatformVersion test', (WidgetTester tester) async {
+  testWidgets('getFingerprint test', (WidgetTester tester) async {
     final SeonSdkFlutterPlugin plugin = SeonSdkFlutterPlugin();
-    final String? version = await plugin.getPlatformVersion();
+    final String? fingerprint =
+        await plugin.getFingerprint("1111-1111-1111-aaa");
     // The version string depends on the host platform running the test, so
     // just assert that some non-empty string is returned.
-    expect(version?.isNotEmpty, true);
+    expect(fingerprint?.isNotEmpty, true);
   });
 }
