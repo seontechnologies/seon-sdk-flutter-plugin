@@ -4,7 +4,7 @@ The official Flutter plugin for integrating SEON's advanced fraud prevention and
 
 To learn more about device fingerprinting please visit our [knowledge base](https://seon.io/resources/device-fingerprinting/).
 
->_The plugin depends on the closed-source SEON SDK binaries. While the Flutter plugin itself is open-source and distributed under the MIT License, the SEON SDK binaries remain proprietary and are subject to their own licensing terms. Please visit https://seon.io/resources/legal-and-security/legal/#terms-of-service for more details._
+>_The plugin depends on the closed-source SEON SDK binaries. While the Flutter plugin itself is open-source and distributed under the BSD 3-Clause License, the SEON SDK binaries remain proprietary and are subject to their own licensing terms. Please visit https://seon.io/resources/legal-and-security/legal/#terms-of-service for more details._
 
 ### Platform specific requirements
 #### Android
