@@ -12,12 +12,8 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
       final String? fingerprint = await _channel
           .invokeMethod('getFingerprint', {'sessionId': sessionId});
       return fingerprint;
-    } on PlatformException catch (e) {
-      print("Failed to get fingerprint: ${e.message}");
-      return null;
     } catch (e) {
-      print("An error occured while getting the fingerprint: $e");
-      return null;
+      rethrow;
     }
   }
 
@@ -26,7 +22,7 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
     try {
       _channel.invokeMethod('setGeolocationEnabled', {'enabled': enabled});
     } catch (e) {
-      print("An error occured when enabling Geolocation: $e");
+      rethrow;
     }
   }
 
@@ -36,7 +32,7 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
       _channel.invokeMethod(
           'setGeolocationTimeout', {'timeoutInMillisec': timeoutInMillisec});
     } catch (e) {
-      print("Error while setting Geolocation Timeout: $e");
+      rethrow;
     }
   }
 }
