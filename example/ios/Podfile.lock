@@ -2,7 +2,7 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - seon_sdk_flutter_plugin (1.0.0):
+  - seon_sdk_flutter_plugin (1.0.1):
     - Flutter
     - SeonSDK (~> 5.3.0)
   - SeonSDK (5.3.0)
@@ -27,7 +27,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
-  seon_sdk_flutter_plugin: 308a4cc408689119ecb2ec5acaa5af979ea5d24a
+  seon_sdk_flutter_plugin: cb020bb558dd23c9730c43b7f52de15728f845fc
   SeonSDK: e9dafd9908b880ec39a42f81f750c538b82952bf
 
 PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
