@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:seon_sdk_flutter_plugin/seon_sdk_flutter_plugin.dart';
+import 'package:seon_sdk_flutter_plugin/seon_sdk_geolocation_config.dart';
+import 'package:seon_sdk_flutter_plugin/seon_sdk_geolocation_config_builder.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,8 +25,8 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     try {
-      _seonSdkFlutterPlugin.setGeolocationEnabled(true);
-      _seonSdkFlutterPlugin.setGeolocationTimeout(500);
+      final geoConfig = SeonGeolocationConfigBuilder().withGeolocationEnabled(true).withLocationServiceTimeoutMs(5000).withPrefetchEnabled(true).withMaxLocationCacheAgeSec(10).build();
+      _seonSdkFlutterPlugin.setGeolocationConfig(geoConfig);
     } catch (e) {
       print('$e');
     }
@@ -48,12 +50,33 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+    Future<void> stopBehaviourMonitoring() async {
+    String fingerprint;
+    try {
+      fingerprint = await _seonSdkFlutterPlugin
+              .stopBehaviourMonitoring("flutter-behaviour-demo-session-id-2222") ??
+          'Error getting fingerprint';
+    } catch (e) {
+      fingerprint = 'Failed to get fingerprint $e';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      _fingerprint = fingerprint;
+    });
+  }
+
   // Method to copy text to clipboard
   Future<void> copyToClipboard(String text) async {
     await Clipboard.setData(ClipboardData(text: text));
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Copied to clipboard')),
     );
+  }
+  Future<void> startBehaviourMonitoring() async {
+    print('Behaviour started');
+    _seonSdkFlutterPlugin.startBehaviourMonitoring();
   }
 
   @override
@@ -84,6 +107,14 @@ class _MyAppState extends State<MyApp> {
                 ElevatedButton(
                   onPressed: () => copyToClipboard(_fingerprint),
                   child: const Text('Copy to Clipboard'),
+                ),
+                ElevatedButton(
+                  onPressed: startBehaviourMonitoring,
+                  child: const Text('Start behaviour'),
+                ),
+                ElevatedButton(
+                  onPressed: stopBehaviourMonitoring,
+                  child: const Text('Stop behaviour'),
                 ),
               ],
             ),
