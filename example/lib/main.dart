@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     if (!mounted) return;
-
+    print(fingerprint);
     setState(() {
       _fingerprint = fingerprint;
     });
@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
     }
 
     if (!mounted) return;
-
+    print(fingerprint);
     setState(() {
       _fingerprint = fingerprint;
     });
