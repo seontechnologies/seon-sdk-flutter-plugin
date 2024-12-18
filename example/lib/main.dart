@@ -75,8 +75,18 @@ class _MyAppState extends State<MyApp> {
     );
   }
   Future<void> startBehaviourMonitoring() async {
+    String fingerprint = "";
     print('Behaviour started');
-    _seonSdkFlutterPlugin.startBehaviourMonitoring();
+    try {
+      _seonSdkFlutterPlugin.startBehaviourMonitoring();
+    } catch (e) {
+      fingerprint = 'Failed to start behaviour $e';
+      if (mounted) {
+        setState(() {
+          _fingerprint = fingerprint;
+        });
+      }
+    }
   }
 
   @override
