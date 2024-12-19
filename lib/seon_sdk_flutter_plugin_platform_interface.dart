@@ -1,5 +1,6 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'seon_sdk_flutter_plugin_method_channel.dart';
+import 'seon_sdk_geolocation_config.dart';
 
 abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   /// Constructs a SeonSdkFlutterPluginPlatform.
@@ -25,12 +26,21 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   Future<String?> getFingerprint(String? sessionId) async {
     return _instance.getFingerprint(sessionId);
   }
-
+  void startBehaviourMonitoring() {
+    _instance.startBehaviourMonitoring();
+  }
+  Future<String?> stopBehaviourMonitoring(String? sessionId) async {
+    return _instance.stopBehaviourMonitoring(sessionId);
+  }
   void setGeolocationEnabled(bool enabled) {
     _instance.setGeolocationEnabled(enabled);
   }
 
   void setGeolocationTimeout(int timeoutInMillisec) {
     _instance.setGeolocationTimeout(timeoutInMillisec);
+  }
+
+  void setGeolocationConfig(SeonGeolocationConfig config) {
+    _instance.setGeolocationConfig(config);
   }
 }
