@@ -3,6 +3,8 @@ import 'package:seon_sdk_flutter_plugin/seon_sdk_flutter_plugin.dart';
 import 'package:seon_sdk_flutter_plugin/seon_sdk_flutter_plugin_platform_interface.dart';
 import 'package:seon_sdk_flutter_plugin/seon_sdk_flutter_plugin_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:seon_sdk_flutter_plugin/seon_sdk_geolocation_config.dart';
+import 'package:seon_sdk_flutter_plugin/seon_sdk_geolocation_config_builder.dart';
 
 class MockSeonSdkFlutterPluginPlatform
     with MockPlatformInterfaceMixin
@@ -13,6 +15,17 @@ class MockSeonSdkFlutterPluginPlatform
   Future<String?> getFingerprint(String? sessionId) {
     return Future.value(expectedFingerprint);
   }
+
+  @override
+  void startBehaviourMonitoring() {}
+
+  @override
+  Future<String?> stopBehaviourMonitoring(String? sessionId) {
+    return Future.value(expectedFingerprint);
+  }
+
+  @override
+  void setGeolocationConfig(SeonGeolocationConfig config) {}
 
   @override
   void setGeolocationEnabled(bool enabled) {}
@@ -39,6 +52,24 @@ void main() {
     expect(await seonSdkFlutterPlugin.getFingerprint('test-session-id'),
         expectedFingerprint);
   });
+    test('startBehaviourMonitoring', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    // Call the method and ensure no exceptions
+    seonSdkFlutterPlugin.startBehaviourMonitoring();
+  });
+  test('stopBehaviourCollection', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    expect(await seonSdkFlutterPlugin.stopBehaviourMonitoring('test-session-id'),
+        expectedFingerprint);
+  });
   test('setGeolocationEnabled', () async {
     SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
     MockSeonSdkFlutterPluginPlatform fakePlatform =
@@ -58,4 +89,14 @@ void main() {
     // Call the method and ensure no exceptions
     seonSdkFlutterPlugin.setGeolocationTimeout(400);
   });
+    test('setGeolocationConfig', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    // Call the method and ensure no exceptions
+    seonSdkFlutterPlugin.setGeolocationConfig(SeonGeolocationConfigBuilder().withGeolocationEnabled(true).withLocationServiceTimeoutMs(3000).withMaxLocationCacheAgeSec(10).withPrefetchEnabled(true).build());
+  });
+
 }
