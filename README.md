@@ -31,7 +31,7 @@ To learn more about device fingerprinting please visit our [knowledge base](http
 ### Using the plugin
 
 The SDK returns an encrypted, base64 encoded string. In order to receive the device details JSON a Fraud API request has to be made, and the result will be in the response.
-The base64 encoded string has to be added in the session property in the Fraud API request. It isn’t possible to access or modify the payload on the clientside.
+The base64 encoded string has to be added in the session property in the Fraud API request. It isn’t possible to access or modify the payload on the client side.
 
 ```dart
 final _seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
@@ -62,12 +62,12 @@ The monitoring should be started with calling `startBehaviourMonitoring` whereve
 -	`"possible_device_farm"`: Suggests that the device might be part of a device farm used for fraudulent activities.
 -	`"possible_vishing"`: Flags possible vishing (voice phishing) activity, where the user might be coerced into providing sensitive information.
 -	`"possible_ongoing_call"`: <span style="color:red"><b>[ANDROID ONLY]</b></span> - Flags possible ongoing phone call, which could be useful information in case the **READ_PHONE_STATE** permission wasn't granted for `is_on_call` field to work. This behaviour based flag does not need any permissions to work, but it's only a best-effort metric.
-- **To be continously improved and extended with new signals**
+- **To be continuously improved and extended with new signals**
 
 ## Using SDK with behavioural monitoring
 
 The SDK returns an encrypted, base64 encoded string. In order to receive the device details JSON a Fraud API request has to be made, and the result will be in the response.
-The base64 encoded string has to be added in the session property in the Fraud API request. It isn’t possible to access or modify the payload on the clientside.
+The base64 encoded string has to be added in the session property in the Fraud API request. It isn’t possible to access or modify the payload on the client side.
 
 
 ```dart
