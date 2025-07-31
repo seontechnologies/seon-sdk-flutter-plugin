@@ -15,7 +15,7 @@ SEON Fingerprinting SDK Flutter plugin for Fraud Prevention.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
-  s.dependency 'SeonSDK', '~> 5.5.1'
+  s.dependency 'SeonSDK', '~> 5.6.1'
   s.platform = :ios, '12.0'
 
   # Flutter.framework does not contain a i386 slice.
