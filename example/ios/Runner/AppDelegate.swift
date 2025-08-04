@@ -2,7 +2,7 @@ import Flutter
 import UIKit
 import CoreLocation
 
-@UIApplicationMain
+@main
 @objc class AppDelegate: FlutterAppDelegate,CLLocationManagerDelegate {
     private var locationManager: CLLocationManager?
     
