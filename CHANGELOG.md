@@ -1,3 +1,8 @@
+## 1.2.0
+- Added 16 KB page size support to ensure Google Play compatibility beyond November 1st, 2025. Please carefully read the [related documentation](https://github.com/seontechnologies/seon-android-sdk-public?tab=readme-ov-file#16-kb-page-size-compatibility-on-google-play)!
+- Supports Android SDK version: `6.8.0`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#680
+- Supports iOS SDK version: `5.6.1` For the changelog visit: https://github.com/seontechnologies/seon-ios-sdk-public#561
+- Added fixes and improvements
 ## 1.1.0
 - Introduced Geolocation config object
 - Introduced Behavioural monitoring support
