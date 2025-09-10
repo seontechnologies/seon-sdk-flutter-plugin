@@ -29,7 +29,7 @@ android {
         namespace = "com.example.seon_sdk_flutter_plugin"
     }
 
-    compileSdk = 34
+    compileSdk = 36
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
