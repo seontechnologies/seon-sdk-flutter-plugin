@@ -89,48 +89,64 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Seon SDK Example'),
-        ),
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: SelectableText(
-                      'Fingerprint: $_fingerprint\n',
-                      textAlign: TextAlign.center,
-                    ),
+ @override
+Widget build(BuildContext context) {
+  final screenHeight = MediaQuery.of(context).size.height;
+
+  return MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: const Text('Seon SDK Example'),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: screenHeight * 0.5, // Limit to 50% of screen height
+                child: SingleChildScrollView(
+                  child: SelectableText(
+                    'Fingerprint: $_fingerprint\n',
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: getFingerprint,
-                  child: const Text('Get Fingerprint'),
-                ),
-                ElevatedButton(
-                  onPressed: () => copyToClipboard(_fingerprint),
-                  child: const Text('Copy to Clipboard'),
-                ),
-                ElevatedButton(
-                  onPressed: startBehaviourMonitoring,
-                  child: const Text('Start behaviour'),
-                ),
-                ElevatedButton(
-                  onPressed: stopBehaviourMonitoring,
-                  child: const Text('Stop behaviour'),
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: getFingerprint,
+                    child: const Text('Get Fingerprint'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => copyToClipboard(_fingerprint),
+                    child: const Text('Copy to Clipboard'),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: startBehaviourMonitoring,
+                    child: const Text('Start behaviour'),
+                  ),
+                  ElevatedButton(
+                    onPressed: stopBehaviourMonitoring,
+                    child: const Text('Stop behaviour'),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }
