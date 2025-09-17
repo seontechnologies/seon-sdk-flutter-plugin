@@ -21,7 +21,7 @@ To learn more about device fingerprinting please visit our [knowledge base](http
 
 > __*device_location:__ Please see the Geolocation Integration section for more info
 #### iOS
-- iOS 12.0 or higher
+- iOS 15.0 or higher
 - _(optional)_ [Access WiFi Information entitlement](https://developer.apple.com/documentation/bundleresources/entitlements/com_apple_developer_networking_wifi-info) for `wifi_mac_address` and `wifi_ssid`
 - _(optional)_ [Core Location permission](https://developer.apple.com/documentation/corelocation/) for `device_location`*, `wifi_mac_address` and `wifi_ssid` (starting from iOS 13)
 
