@@ -1,0 +1,11 @@
+name: Validate flutter package
+run-name: Validating flutter package 🚀
+on: [push]
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - name: Run flutter package check      
+        run: flutter pub pub publish --dry-run
