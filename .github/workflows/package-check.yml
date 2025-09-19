@@ -2,7 +2,7 @@ name: Validate flutter package
 run-name: Validating flutter package 🚀
 on: [push]
 jobs:
-  changelog:
+  package-validity-check:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
@@ -10,6 +10,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.35.3'
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
       - name: Run flutter package check      
         run: flutter pub pub publish --dry-run
