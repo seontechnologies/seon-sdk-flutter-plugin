@@ -1,11 +1,15 @@
 name: Validate flutter package
 run-name: Validating flutter package 🚀
 on:
+  pull_request:
+    branches:
+      - 'master'
+      - 'releases/**'
   push:
     branches:
-      - master
-      - develop
-      - 'release/*'
+      - 'master'
+      - 'develop'
+      - 'releases/**'
 jobs:
   package-validity-check:
     runs-on: ubuntu-latest
