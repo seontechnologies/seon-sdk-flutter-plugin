@@ -1,5 +1,5 @@
 ## 1.2.2
-- Added Java 8 compatibility
+- Lowered `sourceCompatibility` and `targetCompatibility` to Java version 1.8 on Android
 - Removed the following permissions from our `AndroidManifest.xml`:
     > __Note:__ If you depend any of the optional features connected to these permissions, from this version onwards you need to add them to your `AndroidManifest.xml` manually
 
