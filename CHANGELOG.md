@@ -1,3 +1,14 @@
+## 1.2.2
+- Lowered `sourceCompatibility` and `targetCompatibility` to Java version 1.8 on Android
+- Removed the following permissions from our `AndroidManifest.xml`:
+    > __Note:__ If you depend any of the optional features connected to these permissions, from this version onwards you need to add them to your `AndroidManifest.xml` manually
+
+    > Please, read carefully what features are connected to these permissions in `README.md` or in our Android SDK public documentation's [Requirements section](https://github.com/seontechnologies/seon-android-sdk-public?tab=readme-ov-file#requirements)
+    - `android.permission.ACCESS_FINE_LOCATION`
+    - `android.permission.ACCESS_COARSE_LOCATION`
+    - `android.permission.READ_PHONE_STATE`
+    - `android.permission.READ_PHONE_NUMBERS`
+- Supports Android SDK version: `6.8.1`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#681
 ## 1.2.1
 - ⚠️ **IMPORTANT! This version includes necessary fixes to be compliant and compatible with iOS 26!** ⚠️
 - Supports iOS SDK version: `5.6.2` For the changelog visit: https://github.com/seontechnologies/seon-ios-sdk-public#562

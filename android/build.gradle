@@ -32,12 +32,12 @@ android {
     compileSdk = 36
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21
-        targetCompatibility = JavaVersion.VERSION_21
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = "1.8"
     }
 
     sourceSets {
@@ -52,7 +52,7 @@ android {
     dependencies {
         testImplementation("org.jetbrains.kotlin:kotlin-test")
         testImplementation("org.mockito:mockito-core:5.0.0")
-        implementation 'io.seon.androidsdk:androidsdk:6.8.0'
+        implementation 'io.seon.androidsdk:androidsdk:6.8.1'
     }
 
     testOptions {
