@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'seon_sdk_flutter_plugin'
-  s.version          = '1.2.3'
+  s.version          = '1.2.4'
   s.summary          = 'SEON Flutter Plugin'
   s.description      = <<-DESC
 SEON Fingerprinting SDK Flutter plugin for Fraud Prevention.
