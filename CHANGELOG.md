@@ -1,3 +1,5 @@
+## 1.2.4
+- Supports Android SDK version: `6.8.2`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#682
 ## 1.2.3
 - Supports iOS SDK version: `5.6.3` For the changelog visit: https://github.com/seontechnologies/seon-ios-sdk-public#563
 ## 1.2.2
