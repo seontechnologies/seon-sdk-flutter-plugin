@@ -65,5 +65,14 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
     } catch (e) {
       rethrow;
     }
+  } 
+
+  @override
+  Future<void> setDnsTimeout(int timeoutInMillisec) async {
+    try {
+      await _channel.invokeMethod('setDnsTimeout', {'timeoutInMillisec': timeoutInMillisec});
+    } catch (e) {
+      rethrow;
+    }
   }
 }

@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
     try {
       final geoConfig = SeonGeolocationConfigBuilder().withGeolocationEnabled(true).withLocationServiceTimeoutMs(5000).withPrefetchEnabled(true).withMaxLocationCacheAgeSec(10).build();
       _seonSdkFlutterPlugin.setGeolocationConfig(geoConfig);
+      _seonSdkFlutterPlugin.setDnsTimeout(5000);
     } catch (e) {
       print('$e');
     }
