@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
       "state" : {
-        "revision" : "59ffdf31114b7825f6f6d7ad644245c4cbfe6cda",
-        "version" : "5.6.3"
+        "revision" : "6c0aa8ce12e845b64ccd642f54773a86a0927a15",
+        "version" : "5.7.1"
       }
     }
   ],
