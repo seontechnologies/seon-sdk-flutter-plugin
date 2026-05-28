@@ -60,8 +60,7 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
             getFingerprint(newSessionId, result)
         }
         "startBehaviourMonitoring" -> {
-            startBehaviourMonitoring()
-            result.success(null)
+            startBehaviourMonitoring(result)
         }
         "stopBehaviourMonitoring" -> {
             val newSessionId = call.argument<String>("sessionId")
@@ -151,8 +150,14 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
   private fun setGeolocationTimeout(timeoutInMilliseconds:Int){
       geolocationConfig.geolocationServiceTimeoutMs = timeoutInMilliseconds
   }
-  private fun startBehaviourMonitoring() {
-    getSeonObject().startBehaviourMonitoring()
+  private fun startBehaviourMonitoring(result: Result) {
+      try {
+          getSeonObject().startBehaviourMonitoring()
+          result.success(null)
+      } catch (e: SeonException) {
+          result.error("SEON_EXCEPTION", e.message, null)
+      }
+
   }
   private fun stopBehaviourMonitoring(sessionId: String, result: Result) {
     try {
