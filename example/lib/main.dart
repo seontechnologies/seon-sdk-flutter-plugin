@@ -3,7 +3,6 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:seon_sdk_flutter_plugin/seon_sdk_flutter_plugin.dart';
-import 'package:seon_sdk_flutter_plugin/seon_sdk_geolocation_config.dart';
 import 'package:seon_sdk_flutter_plugin/seon_sdk_geolocation_config_builder.dart';
 
 void main() {
@@ -78,7 +77,7 @@ class _MyAppState extends State<MyApp> {
     String fingerprint = "";
     print('Behaviour started');
     try {
-      _seonSdkFlutterPlugin.startBehaviourMonitoring();
+      await _seonSdkFlutterPlugin.startBehaviourMonitoring();
     } catch (e) {
       fingerprint = 'Failed to start behaviour $e';
       if (mounted) {
