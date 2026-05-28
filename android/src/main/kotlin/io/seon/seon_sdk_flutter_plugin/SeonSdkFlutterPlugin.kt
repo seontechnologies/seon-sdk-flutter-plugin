@@ -81,7 +81,6 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
         "setGeolocationTimeout" -> {
             val timeoutInMs = call.argument<Int>("timeoutInMillisec")
             if (timeoutInMs != null){
-                Log.d("SEON","geo timeout: $timeoutInMs")
                 setGeolocationTimeout(timeoutInMs)
             }
             result.success(null);
@@ -107,7 +106,6 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
         "setDnsTimeout" -> {
             val timeoutInMs = call.argument<Int>("timeoutInMillisec")
             if (timeoutInMs != null){
-                Log.d("SEON","dns timeout: $timeoutInMs")
                 setDnsTimeout(timeoutInMs)
             }
             result.success(null);
