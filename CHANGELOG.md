@@ -1,4 +1,5 @@
 ## Upcoming version
+- Add Swift Package Manager support
 - Changed `startBehaviourMonitoring`, `setGeolocationEnabled`, `setGeolocationTimeout`, and `setGeolocationConfig` to return `Future<void>`.
 - Method channel invocations for these APIs are now awaited to ensure proper async completion and error propagation.
 - Expose `setDnsTimeout` function from native sdks.
