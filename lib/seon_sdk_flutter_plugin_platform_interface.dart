@@ -26,21 +26,21 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   Future<String?> getFingerprint(String? sessionId) async {
     return _instance.getFingerprint(sessionId);
   }
-  void startBehaviourMonitoring() {
+  Future<void> startBehaviourMonitoring() async {
     _instance.startBehaviourMonitoring();
   }
   Future<String?> stopBehaviourMonitoring(String? sessionId) async {
     return _instance.stopBehaviourMonitoring(sessionId);
   }
-  void setGeolocationEnabled(bool enabled) {
+  Future<void> setGeolocationEnabled(bool enabled) async {
     _instance.setGeolocationEnabled(enabled);
   }
 
-  void setGeolocationTimeout(int timeoutInMillisec) {
+  Future<void> setGeolocationTimeout(int timeoutInMillisec) async {
     _instance.setGeolocationTimeout(timeoutInMillisec);
   }
 
-  void setGeolocationConfig(SeonGeolocationConfig config) {
+  Future<void> setGeolocationConfig(SeonGeolocationConfig config) async {
     _instance.setGeolocationConfig(config);
   }
 }

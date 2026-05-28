@@ -1,7 +1,5 @@
 PODS:
   - Flutter (1.0.0)
-  - integration_test (0.0.1):
-    - Flutter
   - seon_sdk_flutter_plugin (1.2.4):
     - Flutter
     - SeonSDK (~> 5.6.3)
@@ -9,7 +7,6 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - integration_test (from `.symlinks/plugins/integration_test/ios`)
   - seon_sdk_flutter_plugin (from `.symlinks/plugins/seon_sdk_flutter_plugin/ios`)
 
 SPEC REPOS:
@@ -19,15 +16,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  integration_test:
-    :path: ".symlinks/plugins/integration_test/ios"
   seon_sdk_flutter_plugin:
     :path: ".symlinks/plugins/seon_sdk_flutter_plugin/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  integration_test: 252f60fa39af5e17c3aa9899d35d908a0721b573
-  seon_sdk_flutter_plugin: 09b02e682ea9c85e39976d178ed23c37f0b1d145
+  seon_sdk_flutter_plugin: 08a54716eea950a56b9436db578417a2e3bfec86
   SeonSDK: f19dbab9444dd04eaa80c6c5035c99f3c5705d80
 
 PODFILE CHECKSUM: 9c46fd01abff66081b39f5fa5767b3f1d0b11d76
