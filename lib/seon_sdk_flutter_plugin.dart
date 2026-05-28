@@ -24,4 +24,9 @@ class SeonSdkFlutterPlugin {
     return SeonSdkFlutterPluginPlatform.instance
         .setGeolocationConfig(config);
   }
+
+  Future<void> setDnsTimeout(int timeoutInMillisec) async {
+    return SeonSdkFlutterPluginPlatform.instance
+        .setDnsTimeout(timeoutInMillisec);
+  }
 }

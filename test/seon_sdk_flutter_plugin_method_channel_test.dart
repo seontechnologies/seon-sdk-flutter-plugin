@@ -21,6 +21,8 @@ void main() {
             return null;
           case 'setGeolocationTimeout':
             return null;
+          case 'setDnsTimeout':
+            return null;
           default:
             return null;
         }
@@ -47,6 +49,12 @@ void main() {
   test('setGeolocationTimeout', () async {
     int timeoutInMillisec = 3000;
     platform.setGeolocationTimeout(timeoutInMillisec);
+    // No assertion needed, just ensure no exceptions
+  });
+
+  test('setDnsTimeout', () async {
+    int timeoutInMillisec = 3000;
+    platform.setDnsTimeout(timeoutInMillisec);
     // No assertion needed, just ensure no exceptions
   });
 }

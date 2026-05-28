@@ -43,4 +43,7 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   Future<void> setGeolocationConfig(SeonGeolocationConfig config) async {
     return _instance.setGeolocationConfig(config);
   }
+  Future<void> setDnsTimeout(int timeoutInMillisec) async {
+    return _instance.setDnsTimeout(timeoutInMillisec);
+  }
 }

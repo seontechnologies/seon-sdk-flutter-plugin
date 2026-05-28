@@ -35,6 +35,9 @@ The base64 encoded string has to be added in the session property in the Fraud A
 ```dart
 final _seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
 
+// You can optionally set a custom timeout for the SDK's network call
+await _seonSdkFlutterPlugin.setDnsTimeout(3000);
+
 try {
     String? fingerprint =
         await _seonSdkFlutterPlugin.getFingerprint("<UNIQUE_SESSION_ID>");

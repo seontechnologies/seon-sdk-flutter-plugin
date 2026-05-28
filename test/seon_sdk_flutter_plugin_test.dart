@@ -36,8 +36,13 @@ class MockSeonSdkFlutterPluginPlatform
     return Future.value();
   }
 
-    @override
-    Future<void> setGeolocationTimeout(int timeoutInMillisec) async {
+   @override
+  Future<void> setGeolocationTimeout(int timeoutInMillisec) async {
+    return Future.value();
+  }
+
+  @override
+  Future<void> setDnsTimeout(int timeoutInMillisec) async {
     return Future.value();
   }
 }

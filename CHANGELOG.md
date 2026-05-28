@@ -1,6 +1,7 @@
 ## Upcoming version
 - Changed `startBehaviourMonitoring`, `setGeolocationEnabled`, `setGeolocationTimeout`, and `setGeolocationConfig` to return `Future<void>`.
 - Method channel invocations for these APIs are now awaited to ensure proper async completion and error propagation.
+- Expose `setDnsTimeout` function from native sdks.
 ## 1.2.4
 - Supports Android SDK version: `6.8.2`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#682
 ## 1.2.3
