@@ -15,7 +15,7 @@ SEON Fingerprinting SDK Flutter plugin for Fraud Prevention.
   s.source           = { :git => 'https://github.com/seontechnologies/seon-sdk-flutter-plugin.git', :tag => s.version.to_s }
   s.source_files = 'seon_sdk_flutter_plugin/Sources/seon_sdk_flutter_plugin/**/*'
   s.dependency 'Flutter'
-  s.dependency 'SeonSDK', '~> 5.6.3'
+  s.dependency 'SeonSDK', '~> 5.7.1'
   s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.
