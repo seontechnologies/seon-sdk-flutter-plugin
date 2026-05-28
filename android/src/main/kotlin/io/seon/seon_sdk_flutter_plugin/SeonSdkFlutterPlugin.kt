@@ -61,6 +61,7 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
         }
         "startBehaviourMonitoring" -> {
             startBehaviourMonitoring()
+            result.success(null)
         }
         "stopBehaviourMonitoring" -> {
             val newSessionId = call.argument<String>("sessionId")
