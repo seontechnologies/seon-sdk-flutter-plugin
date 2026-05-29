@@ -1,8 +1,10 @@
-## Upcoming version
+## 1.3.0
 - Add Swift Package Manager support
 - Changed `startBehaviourMonitoring`, `setGeolocationEnabled`, `setGeolocationTimeout`, and `setGeolocationConfig` to return `Future<void>`.
 - Method channel invocations for these APIs are now awaited to ensure proper async completion and error propagation.
 - Expose `setDnsTimeout` function from native sdks.
+- Supports Android SDK version: `6.8.6`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#686
+- Supports iOS SDK version: `5.7.1` For the changelog visit: https://github.com/seontechnologies/seon-ios-sdk-public#571
 ## 1.2.4
 - Supports Android SDK version: `6.8.2`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#682
 ## 1.2.3
