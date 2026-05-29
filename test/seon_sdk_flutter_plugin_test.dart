@@ -17,7 +17,9 @@ class MockSeonSdkFlutterPluginPlatform
   }
 
   @override
-  void startBehaviourMonitoring() {}
+  Future<void> startBehaviourMonitoring() async {
+    return Future.value();
+  }
 
   @override
   Future<String?> stopBehaviourMonitoring(String? sessionId) {
@@ -25,13 +27,24 @@ class MockSeonSdkFlutterPluginPlatform
   }
 
   @override
-  void setGeolocationConfig(SeonGeolocationConfig config) {}
+  Future<void> setGeolocationConfig(SeonGeolocationConfig config) async {
+    return Future.value();
+  }
 
   @override
-  void setGeolocationEnabled(bool enabled) {}
+  Future<void> setGeolocationEnabled(bool enabled) async {
+    return Future.value();
+  }
+
+   @override
+  Future<void> setGeolocationTimeout(int timeoutInMillisec) async {
+    return Future.value();
+  }
 
   @override
-  void setGeolocationTimeout(int timeoutInMillisec) {}
+  Future<void> setDnsTimeout(int timeoutInMillisec) async {
+    return Future.value();
+  }
 }
 
 String expectedFingerprint = 'Test_Fingerprint';

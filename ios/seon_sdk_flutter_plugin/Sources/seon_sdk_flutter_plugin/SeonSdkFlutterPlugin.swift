@@ -73,7 +73,15 @@ public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
                 geoConfig = config
                 refreshGeolocationConfig()
                 result(nil)
-            default:
+            case "setDnsTimeout":
+                guard let args = call.arguments as? [String? : Any],
+                let timeoutMs = args["timeoutInMillisec"] as? Int else{
+                    result(FlutterError(code: "ERROR_PARSING_DNS_TIMEOUT", message: "Error while parsing setDnsTimeout argument", details: nil))
+                    return
+                }
+                getSeonObject().dnsTimeoutMs = timeoutMs
+                result(nil)
+            default:    
               result(FlutterMethodNotImplemented)
             }
     }

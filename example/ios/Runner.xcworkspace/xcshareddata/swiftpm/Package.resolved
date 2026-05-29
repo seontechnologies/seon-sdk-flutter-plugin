@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "seon-ios-sdk-swift-package",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
+      "state" : {
+        "revision" : "6c0aa8ce12e845b64ccd642f54773a86a0927a15",
+        "version" : "5.7.1"
+      }
+    }
+  ],
+  "version" : 2
+}

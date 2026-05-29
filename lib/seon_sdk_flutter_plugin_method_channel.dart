@@ -18,9 +18,9 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
     }
   }
   @override
-  void startBehaviourMonitoring() {
+  Future<void> startBehaviourMonitoring() async {
     try {
-      _channel.invokeMethod(
+      await _channel.invokeMethod(
           'startBehaviourMonitoring');
     } catch (e) {
       rethrow;
@@ -39,18 +39,18 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
   }
 
   @override
-  void setGeolocationEnabled(bool enabled) {
+  Future<void> setGeolocationEnabled(bool enabled) async {
     try {
-      _channel.invokeMethod('setGeolocationEnabled', {'enabled': enabled});
+      await _channel.invokeMethod('setGeolocationEnabled', {'enabled': enabled});
     } catch (e) {
       rethrow;
     }
   }
 
   @override
-  void setGeolocationTimeout(int timeoutInMillisec) {
+  Future<void> setGeolocationTimeout(int timeoutInMillisec) async {
     try {
-      _channel.invokeMethod(
+      await _channel.invokeMethod(
           'setGeolocationTimeout', {'timeoutInMillisec': timeoutInMillisec});
     } catch (e) {
       rethrow;
@@ -58,10 +58,19 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
   }
 
   @override
-  void setGeolocationConfig(SeonGeolocationConfig config) {
+  Future<void> setGeolocationConfig(SeonGeolocationConfig config) async {
     try {
-      _channel.invokeMethod(
+      await _channel.invokeMethod(
           'setGeolocationConfig', config.toMap());
+    } catch (e) {
+      rethrow;
+    }
+  } 
+
+  @override
+  Future<void> setDnsTimeout(int timeoutInMillisec) async {
+    try {
+      await _channel.invokeMethod('setDnsTimeout', {'timeoutInMillisec': timeoutInMillisec});
     } catch (e) {
       rethrow;
     }

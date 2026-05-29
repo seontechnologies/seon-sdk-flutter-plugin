@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'seon_sdk_flutter_plugin'
-  s.version          = '1.2.4'
+  s.version          = '1.3.0'
   s.summary          = 'SEON Flutter Plugin'
   s.description      = <<-DESC
 SEON Fingerprinting SDK Flutter plugin for Fraud Prevention.
@@ -12,10 +12,10 @@ SEON Fingerprinting SDK Flutter plugin for Fraud Prevention.
   s.homepage         = 'https://seon.io'
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'SEON Technologies Ltd.' => 'team-device-fingerprinting@seon.io' }
-  s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source           = { :git => 'https://github.com/seontechnologies/seon-sdk-flutter-plugin.git', :tag => s.version.to_s }
+  s.source_files = 'seon_sdk_flutter_plugin/Sources/seon_sdk_flutter_plugin/**/*'
   s.dependency 'Flutter'
-  s.dependency 'SeonSDK', '~> 5.6.3'
+  s.dependency 'SeonSDK', '~> 5.7.1'
   s.platform = :ios, '15.0'
 
   # Flutter.framework does not contain a i386 slice.

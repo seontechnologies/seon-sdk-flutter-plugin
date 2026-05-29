@@ -60,7 +60,7 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
             getFingerprint(newSessionId, result)
         }
         "startBehaviourMonitoring" -> {
-            startBehaviourMonitoring()
+            startBehaviourMonitoring(result)
         }
         "stopBehaviourMonitoring" -> {
             val newSessionId = call.argument<String>("sessionId")
@@ -81,7 +81,6 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
         "setGeolocationTimeout" -> {
             val timeoutInMs = call.argument<Int>("timeoutInMillisec")
             if (timeoutInMs != null){
-                Log.d("SEON","geo timeout: $timeoutInMs")
                 setGeolocationTimeout(timeoutInMs)
             }
             result.success(null);
@@ -101,6 +100,13 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
                 geolocationConfig = config
                 getSeonObject().setGeoLocationConfig(geolocationConfig)
 //                getSeonObject().setGeolocationEnabled(isGeolocationEnabled)
+            }
+            result.success(null);
+        }
+        "setDnsTimeout" -> {
+            val timeoutInMs = call.argument<Int>("timeoutInMillisec")
+            if (timeoutInMs != null){
+                setDnsTimeout(timeoutInMs)
             }
             result.success(null);
         }
@@ -150,8 +156,14 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
   private fun setGeolocationTimeout(timeoutInMilliseconds:Int){
       geolocationConfig.geolocationServiceTimeoutMs = timeoutInMilliseconds
   }
-  private fun startBehaviourMonitoring() {
-    getSeonObject().startBehaviourMonitoring()
+  private fun startBehaviourMonitoring(result: Result) {
+      try {
+          getSeonObject().startBehaviourMonitoring()
+          result.success(null)
+      } catch (e: SeonException) {
+          result.error("SEON_EXCEPTION", e.message, null)
+      }
+
   }
   private fun stopBehaviourMonitoring(sessionId: String, result: Result) {
     try {
@@ -198,6 +210,17 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
     val nonNullableSeon: Seon = seonFingerprint!!
     nonNullableSeon.setLoggingEnabled(true)
     return nonNullableSeon
+  }
+
+  private fun setDnsTimeout(timeoutInMilliseconds: Int) {
+      var seonFingerprint = SeonBuilder()
+          .withContext(context)
+          .withSessionId(sessionId)
+          .withGeoLocationConfig(geolocationConfig)
+          .withDnsTimeout(timeoutInMilliseconds)
+          .build()
+      seonFingerprint.setLoggingEnabled(true)
+      this.seonFingerprint = seonFingerprint
   }
   private fun setSessionId(newSessionId: String) {
     sessionId = newSessionId;
