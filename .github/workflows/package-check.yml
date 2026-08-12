@@ -1,0 +1,25 @@
+name: Validate flutter package
+run-name: Validating flutter package 🚀
+on:
+  pull_request:
+    branches:
+      - 'master'
+      - 'release/**'
+  push:
+    branches:
+      - 'master'
+      - 'develop'
+      - 'release/**'
+jobs:
+  package-validity-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v5
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version-file: pubspec.yaml # path to pubspec.yaml
+      - name: Run flutter package check      
+        run: flutter pub publish --dry-run
