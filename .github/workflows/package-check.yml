@@ -4,12 +4,12 @@ on:
   pull_request:
     branches:
       - 'master'
-      - 'releases/**'
+      - 'release/**'
   push:
     branches:
       - 'master'
       - 'develop'
-      - 'releases/**'
+      - 'release/**'
 jobs:
   package-validity-check:
     runs-on: ubuntu-latest
