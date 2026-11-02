@@ -186,7 +186,7 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
             })
         }
         else {
-            getSeonObject().getFingerprintBase64 { fingerprint ->
+            getSeonObject().stopBehaviourMonitoring { fingerprint ->
                 if (fingerprint != null) {
                     result.success(fingerprint)
                 } else {
