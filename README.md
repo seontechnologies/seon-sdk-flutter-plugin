@@ -35,7 +35,10 @@ The base64 encoded string has to be added in the session property in the Fraud A
 ```dart
 final _seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
 
-// You can optionally set a custom timeout for the SDK's network call
+// Optional: start the SDK as early as your application flow allows
+await _seonSdkFlutterPlugin.initialize();
+
+// Optional: configure the SDK, e.g. a custom timeout for the SDK's network call
 await _seonSdkFlutterPlugin.setDnsTimeout(3000);
 
 try {
@@ -47,6 +50,8 @@ try {
 }
 ```
 
+
+> __Note:__ The SDK is not started on plugin load. It starts when `initialize()` is called, or on the first call to the plugin if `initialize()` was not called. Calling `initialize()` is optional, but we recommend calling it as early as your application flow allows, so the SDK has enough time to bootstrap before the first fingerprint is requested. Calling `initialize()` more than once is safe.
 
 For more details about how to send the fingerprint to our API to receive the device details JSON visit our [Fraud API documentation](https://docs.seon.io/api-reference/fraud-api#ios-sdk).
 
@@ -74,11 +79,13 @@ The base64 encoded string has to be added in the session property in the Fraud A
 
 ```dart
 final _seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+//Optional: start the SDK as early as your application flow allows
+await _seonSdkFlutterPlugin.initialize();
 //To get behaviour based signals, you have to start monitoring before the relevant user journey:
 try {
-    _seonSdkFlutterPlugin.startBehaviourMonitoring();
+    await _seonSdkFlutterPlugin.startBehaviourMonitoring();
 } catch (e) {
-    fingerprint = 'Failed to start behaviour $e';
+    print("Failed to start behaviour monitoring: $e");
 }
 /* ---- Relevant user journey happens here ----
 * Note: The behaviour analysis needs time to collect signals on user behaviour,
@@ -109,8 +116,8 @@ try {
         .withGeolocationEnabled(true).withLocationServiceTimeoutMs(3000)
         .withPrefetchEnabled(true).withMaxLocationCacheAgeSec(600)
         .build();
-      _seonSdkFlutterPlugin.setGeolocationConfig(geoConfig);
-//Generate the fingerprint as usual
+      await _seonSdkFlutterPlugin.setGeolocationConfig(geoConfig);
+//Then generate the fingerprint as usual
 ```
 
 
