@@ -84,4 +84,13 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
       rethrow;
     }
   }
+
+  @override
+  Future<void> setOpportunisticSsidCollectionEnabled(bool enabled) async {
+    try {
+      await _channel.invokeMethod('setOpportunisticSsidCollectionEnabled', {'enabled': enabled});
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

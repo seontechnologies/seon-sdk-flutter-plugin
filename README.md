@@ -41,6 +41,9 @@ await _seonSdkFlutterPlugin.initialize();
 // Optional: configure the SDK, e.g. a custom timeout for the SDK's network call
 await _seonSdkFlutterPlugin.setDnsTimeout(3000);
 
+// Android only: opportunistically collect the connected WiFi SSID (no-op on iOS)
+await _seonSdkFlutterPlugin.setOpportunisticSsidCollectionEnabled(true);
+
 try {
     String? fingerprint =
         await _seonSdkFlutterPlugin.getFingerprint("<UNIQUE_SESSION_ID>");

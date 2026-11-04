@@ -23,6 +23,8 @@ void main() {
             return null;
           case 'setDnsTimeout':
             return null;
+          case 'setOpportunisticSsidCollectionEnabled':
+            return null;
           default:
             return null;
         }
@@ -55,6 +57,11 @@ void main() {
   test('setDnsTimeout', () async {
     int timeoutInMillisec = 3000;
     platform.setDnsTimeout(timeoutInMillisec);
+    // No assertion needed, just ensure no exceptions
+  });
+
+  test('setOpportunisticSsidCollectionEnabled', () async {
+    platform.setOpportunisticSsidCollectionEnabled(true);
     // No assertion needed, just ensure no exceptions
   });
 }
