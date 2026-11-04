@@ -29,4 +29,9 @@ class SeonSdkFlutterPlugin {
     return SeonSdkFlutterPluginPlatform.instance
         .setDnsTimeout(timeoutInMillisec);
   }
+
+  Future<void> setOpportunisticSsidCollectionEnabled(bool enabled) async {
+    return SeonSdkFlutterPluginPlatform.instance
+        .setOpportunisticSsidCollectionEnabled(enabled);
+  }
 }

@@ -81,7 +81,9 @@ public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
                 }
                 getSeonObject().dnsTimeoutMs = timeoutMs
                 result(nil)
-            default:    
+            case "setOpportunisticSsidCollectionEnabled":
+                result(nil)
+            default:
               result(FlutterMethodNotImplemented)
             }
     }

@@ -46,4 +46,7 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   Future<void> setDnsTimeout(int timeoutInMillisec) async {
     return _instance.setDnsTimeout(timeoutInMillisec);
   }
+  Future<void> setOpportunisticSsidCollectionEnabled(bool enabled) async {
+    return _instance.setOpportunisticSsidCollectionEnabled(enabled);
+  }
 }
