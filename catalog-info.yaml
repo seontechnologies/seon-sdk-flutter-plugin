@@ -1,0 +1,17 @@
+# yaml-language-server: $schema=https://backstage-schema.seon.internal/schema/v1.json
+# Backstage catalog entry for this repository.
+# Catalog guide: https://backstage.seon.internal/catalog-guide/overview
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: seon-sdk-flutter-plugin
+  description: Exposes device fingerprinting via a Flutter plugin
+  annotations:
+    seon.io/degradation-impact: no-immediate-impact
+    seon.io/deployment-scope: client-side
+spec:
+  type: library
+  lifecycle: production
+  owner: group:default/device-intelligence
+  system: system:fingerprint-core
