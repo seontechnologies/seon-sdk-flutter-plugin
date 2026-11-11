@@ -23,6 +23,10 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<void> initialize() async {
+    return _instance.initialize();
+  }
+
   Future<String?> getFingerprint(String? sessionId) async {
     return _instance.getFingerprint(sessionId);
   }

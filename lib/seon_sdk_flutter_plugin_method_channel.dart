@@ -8,6 +8,15 @@ class SeonSdkWrapper extends SeonSdkFlutterPluginPlatform {
       MethodChannel('seon_sdk_flutter_plugin');
 
   @override
+  Future<void> initialize() async {
+    try {
+      await _channel.invokeMethod('initialize');
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  @override
   Future<String?> getFingerprint(String? sessionId) async {
     try {
       final String? fingerprint = await _channel

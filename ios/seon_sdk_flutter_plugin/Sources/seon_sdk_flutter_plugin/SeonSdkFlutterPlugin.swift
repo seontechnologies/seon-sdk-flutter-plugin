@@ -18,6 +18,8 @@ public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
             isInited = true;
         }
         switch call.method {
+            case "initialize":
+                result(nil)
             case "getFingerprint":
                     guard let args = call.arguments as? [String? : Any],
                     let sessionId = args["sessionId"] as? String else {
