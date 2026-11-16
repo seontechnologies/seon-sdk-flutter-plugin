@@ -11,6 +11,13 @@ class MockSeonSdkFlutterPluginPlatform
     implements SeonSdkFlutterPluginPlatform {
   String expectedFingerprint = 'Test_Fingerprint';
 
+  bool initialized = false;
+
+  @override
+  Future<void> initialize() async {
+    initialized = true;
+  }
+
   @override
   Future<String?> getFingerprint(String? sessionId) {
     return Future.value(expectedFingerprint);
@@ -54,6 +61,16 @@ void main() {
 
   test('$SeonSdkWrapper is the default instance', () {
     expect(initialPlatform, isInstanceOf<SeonSdkWrapper>());
+  });
+
+  test('initialize', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    await seonSdkFlutterPlugin.initialize();
+    expect(fakePlatform.initialized, true);
   });
 
   test('getFingerprint', () async {

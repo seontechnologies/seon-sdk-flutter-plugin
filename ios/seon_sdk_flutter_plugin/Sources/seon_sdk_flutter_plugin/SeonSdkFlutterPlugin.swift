@@ -4,20 +4,16 @@ import SeonSDK
 
 public class SeonSdkFlutterPlugin: NSObject, FlutterPlugin {
     var geoConfig : SEONGeolocationConfig = SEONGeolocationConfig()
-    var isInited = false;
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "seon_sdk_flutter_plugin", binaryMessenger: registrar.messenger())
         let instance = SeonSdkFlutterPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-        if(!isInited) {
-            let seon = getSeonObject()
-            setGeolocationEnabled(enabled: false)
-            seon.sessionId = UUID().uuidString;
-            isInited = true;
-        }
         switch call.method {
+            case "initialize":
+                _ = getSeonObject()
+                result(nil)
             case "getFingerprint":
                     guard let args = call.arguments as? [String? : Any],
                     let sessionId = args["sessionId"] as? String else {

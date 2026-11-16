@@ -41,7 +41,6 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
       .withGeolocationServiceTimeoutMs(3000)
       .withMaxGeoLocationCacheAgeSec(600)
       .build()
-    seonFingerprint = getSeonObject()
   }
 
   override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
@@ -50,6 +49,10 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
 
   override fun onMethodCall(call: MethodCall, result: Result) {
       when (call.method) {
+        "initialize" -> {
+            getSeonObject()
+            result.success(null)
+        }
         "getFingerprint" -> {
             val newSessionId = call.argument<String>("sessionId")
             if (newSessionId == null) {
@@ -151,10 +154,12 @@ class SeonSdkFlutterPlugin: FlutterPlugin, MethodCallHandler {
 
   private fun setGeolocationEnabled(enabled:Boolean) {
       geolocationConfig.isGeolocationEnabled = enabled
+      getSeonObject().setGeolocationEnabled(enabled)
   }
 
   private fun setGeolocationTimeout(timeoutInMilliseconds:Int){
       geolocationConfig.geolocationServiceTimeoutMs = timeoutInMilliseconds
+      getSeonObject().setGeoLocationConfig(geolocationConfig)
   }
   private fun startBehaviourMonitoring(result: Result) {
       try {
