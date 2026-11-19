@@ -15,3 +15,6 @@ spec:
   lifecycle: production
   owner: group:default/device-intelligence
   system: system:fingerprint-core
+  dependsOn:
+    - component:seon-android-sdk
+    - component:seon-ios-sdk
