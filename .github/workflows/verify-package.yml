@@ -1,0 +1,48 @@
+name: Verify package
+
+on:
+  pull_request:
+    branches:
+      - master
+  workflow_call:
+
+jobs:
+  check-changelog:
+    name: Check CHANGELOG version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Check CHANGELOG has an entry for the current version
+        run: |
+          set -euo pipefail
+
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          VERSION=${VERSION%%+*} # drop the build number, e.g. 1.0.0+3 -> 1.0.0
+          ESCAPED_VERSION=${VERSION//./\\.}
+
+          echo "Looking for a CHANGELOG.md entry for version $VERSION"
+
+          if ! grep -qE "^##+[[:space:]]+\[?v?${ESCAPED_VERSION}\]?([[:space:]]|\$)" CHANGELOG.md; then
+            echo "::error file=CHANGELOG.md::No entry found for version $VERSION. Add a '## $VERSION' section before merging."
+            exit 1
+          fi
+
+          echo "Found CHANGELOG.md entry for $VERSION"
+
+  dry-run-publish:
+    name: Dry-run pub.dev publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Dry-run publish to pub.dev
+        run: flutter pub publish --dry-run
