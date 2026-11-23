@@ -55,7 +55,10 @@ internal class SeonSdkFlutterPluginTest {
     plugin.onMethodCall(MethodCall(method, args), Mockito.mock(MethodChannel.Result::class.java))
   }
 
-  private fun lastBuilder(): SeonBuilder = builders.constructed().last()
+  private fun onlyBuilder(): SeonBuilder {
+    assertEquals(1, builders.constructed().size)
+    return builders.constructed().single()
+  }
 
   private fun geoConfigArgs() = mapOf(
     "geolocationServiceTimeoutMs" to 4000,
@@ -65,96 +68,119 @@ internal class SeonSdkFlutterPluginTest {
   )
 
   @Test
-  fun dnsTimeoutThenSsid_lastRebuildKeepsBoth() {
-    invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
-    invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
+  fun initialize_buildsSeonOnceWithLogging() {
+    invoke("initialize")
+    invoke("initialize")
 
-    Mockito.verify(lastBuilder()).withDnsTimeout(3000)
-    Mockito.verify(lastBuilder()).withOpportunisticSsidCollectionEnabled(true)
+    Mockito.verify(onlyBuilder()).withLogging(true)
+    Mockito.verify(onlyBuilder()).build()
   }
 
   @Test
-  fun ssidThenDnsTimeout_lastRebuildKeepsBoth() {
-    invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
+  fun dnsTimeoutThenSsid_usesSettersOnSingleInstance() {
     invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
+    invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
 
-    Mockito.verify(lastBuilder()).withDnsTimeout(3000)
-    Mockito.verify(lastBuilder()).withOpportunisticSsidCollectionEnabled(true)
+    Mockito.verify(seon).setDnsTimeout(3000)
+    Mockito.verify(seon).setOpportunisticSsidCollectionEnabled(true)
+    Mockito.verify(onlyBuilder(), Mockito.never()).withDnsTimeout(Mockito.anyInt())
+    Mockito.verify(onlyBuilder(), Mockito.never())
+      .withOpportunisticSsidCollectionEnabled(Mockito.anyBoolean())
   }
 
   @Test
-  fun dnsTimeoutUpdatedTwice_usesLatestValueAndKeepsSsid() {
+  fun ssidThenDnsTimeout_usesSettersOnSingleInstance() {
     invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
+    invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
+
+    Mockito.verify(seon).setOpportunisticSsidCollectionEnabled(true)
+    Mockito.verify(seon).setDnsTimeout(3000)
+    onlyBuilder()
+  }
+
+  @Test
+  fun dnsTimeoutUpdatedTwice_setsBothValuesInOrder() {
     invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
     invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 5000))
 
-    Mockito.verify(lastBuilder()).withDnsTimeout(5000)
-    Mockito.verify(lastBuilder(), Mockito.never()).withDnsTimeout(3000)
-    Mockito.verify(lastBuilder()).withOpportunisticSsidCollectionEnabled(true)
+    val inOrder = Mockito.inOrder(seon)
+    inOrder.verify(seon).setDnsTimeout(3000)
+    inOrder.verify(seon).setDnsTimeout(5000)
+    onlyBuilder()
   }
 
   @Test
-  fun ssidDisabledAfterEnabled_usesLatestValueAndKeepsDnsTimeout() {
-    invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
+  fun ssidDisabledAfterEnabled_setsBothValuesInOrder() {
     invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
     invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to false))
 
-    Mockito.verify(lastBuilder()).withOpportunisticSsidCollectionEnabled(false)
-    Mockito.verify(lastBuilder(), Mockito.never()).withOpportunisticSsidCollectionEnabled(true)
-    Mockito.verify(lastBuilder()).withDnsTimeout(3000)
+    val inOrder = Mockito.inOrder(seon)
+    inOrder.verify(seon).setOpportunisticSsidCollectionEnabled(true)
+    inOrder.verify(seon).setOpportunisticSsidCollectionEnabled(false)
+    onlyBuilder()
   }
 
   @Test
   fun onlyDnsTimeoutSet_ssidIsNotConfigured() {
     invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
 
-    Mockito.verify(lastBuilder()).withDnsTimeout(3000)
-    Mockito.verify(lastBuilder(), Mockito.never())
-      .withOpportunisticSsidCollectionEnabled(Mockito.anyBoolean())
+    Mockito.verify(seon).setDnsTimeout(3000)
+    Mockito.verify(seon, Mockito.never()).setOpportunisticSsidCollectionEnabled(Mockito.anyBoolean())
   }
 
   @Test
   fun onlySsidSet_dnsTimeoutIsNotConfigured() {
     invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
 
-    Mockito.verify(lastBuilder()).withOpportunisticSsidCollectionEnabled(true)
-    Mockito.verify(lastBuilder(), Mockito.never()).withDnsTimeout(Mockito.anyInt())
+    Mockito.verify(seon).setOpportunisticSsidCollectionEnabled(true)
+    Mockito.verify(seon, Mockito.never()).setDnsTimeout(Mockito.anyInt())
   }
 
   @Test
-  fun geolocationConfigSetBeforeRebuild_isPassedToRebuiltSeon() {
+  fun missingArguments_doNotCallSetters() {
+    invoke("setDnsTimeout", emptyMap())
+    invoke("setOpportunisticSsidCollectionEnabled", emptyMap())
+
+    Mockito.verify(seon, Mockito.never()).setDnsTimeout(Mockito.anyInt())
+    Mockito.verify(seon, Mockito.never()).setOpportunisticSsidCollectionEnabled(Mockito.anyBoolean())
+  }
+
+  @Test
+  fun geolocationConfigSetFirst_isPassedToBuilder() {
     invoke("setGeolocationConfig", geoConfigArgs())
     invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
     invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
 
     val captor = ArgumentCaptor.forClass(SeonGeolocationConfig::class.java)
-    Mockito.verify(lastBuilder()).withGeoLocationConfig(captor.capture())
+    Mockito.verify(onlyBuilder()).withGeoLocationConfig(captor.capture())
+    assertEquals(4000, captor.value.geolocationServiceTimeoutMs)
+    assertTrue(captor.value.isGeolocationEnabled())
+    Mockito.verify(seon).setDnsTimeout(3000)
+    Mockito.verify(seon).setOpportunisticSsidCollectionEnabled(true)
+  }
+
+  @Test
+  fun geolocationConfigSetAfterSetters_updatesExistingInstance() {
+    invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
+    invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
+    invoke("setGeolocationConfig", geoConfigArgs())
+
+    onlyBuilder()
+    val captor = ArgumentCaptor.forClass(SeonGeolocationConfig::class.java)
+    Mockito.verify(seon).setGeoLocationConfig(captor.capture())
     assertEquals(4000, captor.value.geolocationServiceTimeoutMs)
     assertTrue(captor.value.isGeolocationEnabled())
   }
 
   @Test
-  fun geolocationConfigSetAfterRebuild_doesNotDropDnsTimeoutOrSsid() {
-    invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
-    invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
-    val buildersBefore = builders.constructed().size
-    invoke("setGeolocationConfig", geoConfigArgs())
-    invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
-
-    assertTrue(builders.constructed().size > buildersBefore)
-    Mockito.verify(lastBuilder()).withDnsTimeout(3000)
-    Mockito.verify(lastBuilder()).withOpportunisticSsidCollectionEnabled(true)
-    val captor = ArgumentCaptor.forClass(SeonGeolocationConfig::class.java)
-    Mockito.verify(lastBuilder()).withGeoLocationConfig(captor.capture())
-    assertEquals(4000, captor.value.geolocationServiceTimeoutMs)
-  }
-
-  @Test
-  fun sessionIdSetByFingerprintCall_survivesRebuild() {
+  fun sessionIdSetByFingerprintCall_isUsedForSingleInstance() {
     invoke("getFingerprint", mapOf("sessionId" to "session-1"))
     invoke("setDnsTimeout", mapOf("timeoutInMillisec" to 3000))
     invoke("setOpportunisticSsidCollectionEnabled", mapOf("enabled" to true))
 
-    Mockito.verify(lastBuilder()).withSessionId("session-1")
+    Mockito.verify(onlyBuilder()).withSessionId("session-1")
+    Mockito.verify(seon).setSessionId("session-1")
+    Mockito.verify(seon).setDnsTimeout(3000)
+    Mockito.verify(seon).setOpportunisticSsidCollectionEnabled(true)
   }
 }
