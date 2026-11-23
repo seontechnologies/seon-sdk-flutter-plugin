@@ -3,15 +3,18 @@ import UIKit
 import CoreLocation
 
 @main
-@objc class AppDelegate: FlutterAppDelegate,CLLocationManagerDelegate {
+@objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate, CLLocationManagerDelegate {
     private var locationManager: CLLocationManager?
-    
-    override func application(_ application: UIApplication,didFinishLaunchingWithOptions launchOptions:[UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        GeneratedPluginRegistrant.register(with: self)
+
+    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         requestLocationPermission()
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-    
+
+    func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
+        GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
+    }
+
     private func requestLocationPermission() {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
