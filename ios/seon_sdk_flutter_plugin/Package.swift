@@ -15,7 +15,7 @@ let package = Package(
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(
             url: "https://github.com/seontechnologies/seon-ios-sdk-swift-package",
-            exact: "5.8.2"
+            exact: "5.8.4"
         ),
     ],
     targets: [

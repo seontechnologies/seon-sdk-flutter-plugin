@@ -1,5 +1,7 @@
 ## Upcoming
 - The Android SDK is no longer initialized on plugin load. The SDKs start on the new, optional `initialize()`, or on the first call to the plugin. Call `initialize()` as early as your application flow allows, so the SDK has time to bootstrap before the first fingerprint is requested.
+- Supports Android SDK version: `6.9.5`. For the changelog visit: https://github.com/seontechnologies/seon-android-sdk-public#695
+- Supports iOS SDK version: `5.8.4` For the changelog visit: https://github.com/seontechnologies/seon-ios-sdk-public#584
 ## 1.3.0
 - Add Swift Package Manager support
 - Changed `startBehaviourMonitoring`, `setGeolocationEnabled`, `setGeolocationTimeout`, and `setGeolocationConfig` to return `Future<void>`.
