@@ -52,6 +52,11 @@ class MockSeonSdkFlutterPluginPlatform
   Future<void> setDnsTimeout(int timeoutInMillisec) async {
     return Future.value();
   }
+
+  @override
+  Future<void> setOpportunisticSsidCollectionEnabled(bool enabled) async {
+    return Future.value();
+  }
 }
 
 String expectedFingerprint = 'Test_Fingerprint';
@@ -119,7 +124,7 @@ void main() {
     // Call the method and ensure no exceptions
     seonSdkFlutterPlugin.setGeolocationTimeout(400);
   });
-    test('setGeolocationConfig', () async {
+  test('setGeolocationConfig', () async {
     SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
     MockSeonSdkFlutterPluginPlatform fakePlatform =
         MockSeonSdkFlutterPluginPlatform();
@@ -128,5 +133,24 @@ void main() {
     // Call the method and ensure no exceptions
     seonSdkFlutterPlugin.setGeolocationConfig(SeonGeolocationConfigBuilder().withGeolocationEnabled(true).withLocationServiceTimeoutMs(3000).withMaxLocationCacheAgeSec(10).withPrefetchEnabled(true).build());
   });
+  test('setDnsTimeout', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    // Call the method and ensure no exceptions
+    seonSdkFlutterPlugin.setDnsTimeout(400);
+  });
+  test('setOpportunisticSsidCollectionEnabled', () async {
+    SeonSdkFlutterPlugin seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+    MockSeonSdkFlutterPluginPlatform fakePlatform =
+        MockSeonSdkFlutterPluginPlatform();
+    SeonSdkFlutterPluginPlatform.instance = fakePlatform;
+
+    // Call the method and ensure no exceptions
+    seonSdkFlutterPlugin.setOpportunisticSsidCollectionEnabled(true);
+  });
+
 
 }

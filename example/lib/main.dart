@@ -19,6 +19,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _fingerprint = 'Unknown';
   final _seonSdkFlutterPlugin = SeonSdkFlutterPlugin();
+  final _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   void initState() {
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
       final geoConfig = SeonGeolocationConfigBuilder().withGeolocationEnabled(true).withLocationServiceTimeoutMs(5000).withPrefetchEnabled(true).withMaxLocationCacheAgeSec(10).build();
       _seonSdkFlutterPlugin.setGeolocationConfig(geoConfig);
       _seonSdkFlutterPlugin.setDnsTimeout(5000);
+      _seonSdkFlutterPlugin.setOpportunisticSsidCollectionEnabled(false);
     } catch (e) {
       print('$e');
     }
@@ -71,7 +73,7 @@ class _MyAppState extends State<MyApp> {
   // Method to copy text to clipboard
   Future<void> copyToClipboard(String text) async {
     await Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
+    _scaffoldMessengerKey.currentState?.showSnackBar(
       const SnackBar(content: Text('Copied to clipboard')),
     );
   }
@@ -95,6 +97,7 @@ Widget build(BuildContext context) {
   final screenHeight = MediaQuery.of(context).size.height;
 
   return MaterialApp(
+    scaffoldMessengerKey: _scaffoldMessengerKey,
     home: Scaffold(
       appBar: AppBar(
         title: const Text('Seon SDK Example'),
