@@ -1,0 +1,62 @@
+name: Publish
+run-name: Publish ${{ github.ref_name }} to pub.dev
+
+on:
+  push:
+    tags:
+    - '[0-9]+.[0-9]+.[0-9]+'
+
+permissions: {}
+
+jobs:
+  verify-package:
+    name: Verify package
+    permissions:
+      contents: read
+    uses: ./.github/workflows/verify-package.yml
+
+  check-tag:
+    name: Check tag matches pubspec version
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Check tag matches pubspec version
+        run: |
+          set -euo pipefail
+
+          VERSION=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          VERSION=${VERSION%%+*}
+
+          if [ "$GITHUB_REF_NAME" != "$VERSION" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match pubspec.yaml version $VERSION. Refusing to publish."
+            exit 1
+          fi
+
+          echo "Tag $GITHUB_REF_NAME matches pubspec.yaml version $VERSION."
+
+  publish:
+    name: Publish to pub.dev
+    needs: [verify-package, check-tag]
+    permissions:
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@2286a0c042b44434fe26d292bbce8d34f7ec662b # v1.8.2
+
+  slack-notification:
+    name: Slack Notification
+    if: ${{ !cancelled() && needs.publish.result == 'success' }}
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: slackapi/slack-github-action@0d95c9a7becc1e6e297d76df9bc735c44f4cbcbc # v3.0.5
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK }}
+          webhook-type: webhook-trigger
+          payload: |
+            {
+              "status": "${{ needs.publish.result }}",
+              "name": "Flutter SDK",
+              "version": "v${{ github.ref_name }}"
+            }
