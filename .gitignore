@@ -71,6 +71,7 @@ unlinked_spec.ds
 **/android/gradlew
 **/android/gradlew.bat
 **/android/local.properties
+local.properties
 **/android/**/GeneratedPluginRegistrant.java
 **/android/key.properties
 *.jks
@@ -131,7 +132,6 @@ coverage/
 app.*.symbols
 
 # Exceptions to above rules.
-!example/pubspec.lock
 !example/ios/Podfile.lock
 !**/ios/**/default.mode1v3
 !**/ios/**/default.mode2v3

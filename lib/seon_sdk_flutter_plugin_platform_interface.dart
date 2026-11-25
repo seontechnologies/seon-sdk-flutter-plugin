@@ -23,6 +23,10 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  Future<void> initialize() async {
+    return _instance.initialize();
+  }
+
   Future<String?> getFingerprint(String? sessionId) async {
     return _instance.getFingerprint(sessionId);
   }
@@ -45,5 +49,8 @@ abstract class SeonSdkFlutterPluginPlatform extends PlatformInterface {
   }
   Future<void> setDnsTimeout(int timeoutInMillisec) async {
     return _instance.setDnsTimeout(timeoutInMillisec);
+  }
+  Future<void> setOpportunisticSsidCollectionEnabled(bool enabled) async {
+    return _instance.setOpportunisticSsidCollectionEnabled(enabled);
   }
 }

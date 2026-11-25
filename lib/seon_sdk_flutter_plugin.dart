@@ -2,6 +2,10 @@ import 'seon_sdk_flutter_plugin_platform_interface.dart';
 import 'seon_sdk_geolocation_config.dart';
 
 class SeonSdkFlutterPlugin {
+  Future<void> initialize() async {
+    return SeonSdkFlutterPluginPlatform.instance.initialize();
+  }
+
   Future<String?> getFingerprint(String? sessionId) async {
     return SeonSdkFlutterPluginPlatform.instance.getFingerprint(sessionId);
   }
@@ -28,5 +32,10 @@ class SeonSdkFlutterPlugin {
   Future<void> setDnsTimeout(int timeoutInMillisec) async {
     return SeonSdkFlutterPluginPlatform.instance
         .setDnsTimeout(timeoutInMillisec);
+  }
+
+  Future<void> setOpportunisticSsidCollectionEnabled(bool enabled) async {
+    return SeonSdkFlutterPluginPlatform.instance
+        .setOpportunisticSsidCollectionEnabled(enabled);
   }
 }
